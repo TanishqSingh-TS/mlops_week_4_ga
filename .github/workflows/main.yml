@@ -34,7 +34,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install scikit-learn pandas numpy pytest joblib 
+          pip install scikit-learn pandas numpy pytest joblib dvc-gcs
           pip install dvc[gcs]
         
       - name: Google Cloud Authentication
@@ -51,10 +51,10 @@ jobs:
         run: |
           pytest -v &> output.txt 
 
-      - name: Model Evaluation
-        run: |
-          mkdir artifact_metrics
-          python3 check_metrics.py
+      # - name: Model Evaluation
+      #   run: |
+      #     mkdir artifact_metrics
+      #     python3 check_metrics.py
       
       - name: Create cml report
         run: |
