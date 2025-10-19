@@ -51,15 +51,42 @@ jobs:
         run: |
           pytest -v &> output.txt 
 
-      # - name: Model Evaluation
-      #   run: |
-      #     mkdir artifact_metrics
-      #     python3 check_metrics.py
+      - name: Model Evaluation
+        run: |
+          mkdir artifact_metrics
+          python3 check_metrics.py
       
       - name: Create cml report
         run: |
+          # --- 1. Create the base report content ---
           echo "# CML Test & Evaluation Report" > report.md
+          
+          # --- 2. Section 1: Pytest Results ---
+          echo "## Pytest Sanity Check" >> report.md
+          # Check if output.txt exists before trying to cat it
+          if [ -f output.txt ]; then
+            echo "\`\`\`" >> report.md
+            cat output.txt >> report.md
+            echo "\`\`\`" >> report.md
+          else
+            echo "Pytest output file (output.txt) not found." >> report.md
+          fi
+          
+          # --- Section 2: Text Classification Report ---
+          echo "## Classification Report" >> report.md
+          echo "\`\`\`text" >> report.md # Start a 'text' code block
+          cat ./artifact_metrics/classification_report.txt >> report.md # Inject the report file
+          echo "\`\`\`" >> report.md
 
+                
+          ## Section 3: Confusion Matrix Visualization
+          echo "" >> report.md
+          echo "### Confusion Matrix" >> report.md
+          echo "![](./artifact_metrics/confusion_matrix.png)" >> report.md
+          
+          # Post the entire report.md content as a comment
           cml comment create report.md
+        
+        
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
