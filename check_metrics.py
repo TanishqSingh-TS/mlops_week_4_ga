@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 # --- 1. Load Model and Data ---
 # It's better practice to load data into a separate variable for clarity
 model = joblib.load("./artifacts/model.joblib")
-data = pd.read_csv("./data.csv")
+data = pd.read_csv("./iris.csv")
 
 # --- 2. Prepare Features and Target ---
 # Assuming 'species' is the target column
@@ -54,4 +54,4 @@ plt.savefig("./artifact_metrics/confusion_matrix.png", bbox_inches='tight')
 
 # --- 6. Print DataFrame (for immediate console feedback/debugging) ---
 print("\nMetrics Report:")
-print(df)
+print(report_string)
