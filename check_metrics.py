@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 # --- 1. Load Model and Data ---
 # It's better practice to load data into a separate variable for clarity
 model = joblib.load("./artifacts/model.joblib")
-data = pd.read_csv("./iris.csv")
+data = pd.read_csv("./data/iris.csv")
 
 # --- 2. Prepare Features and Target ---
 # Assuming 'species' is the target column
